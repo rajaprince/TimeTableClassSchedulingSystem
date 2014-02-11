@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@RenderPage("~/Views/Admin/_MainBar.cshtml")
+@RenderPage("~/Views/Admin/_ManageSideBar.cshtml")
+<div class="manage-records">
+    <div class="panel-group" id="accordion">
+    </div>
+</div>
+@section Style{
+    <style>
+        .disp-courses p {
+            vertical-align: middle;
+            text-align: center;
+            padding: 0px;
+        }
+
+        .disp-courses div {
+            height: 100px;
+            overflow-y: auto;
+        }
+    </style>
+}
+@section Script{
+    <script>
+        $("#mainbar-manage").attr('class', 'active');
+        $("#sidebar-programs").attr('class', 'active');
+        addPrograms();
+        function addPrograms() {
+            collapseClass = ' in';
+            programs = ["BS(SE)", "BS(CS)", "BS(IT)"];
+            listAddCourses = ["Database Systems", "Operating System", "Internet Programming"];
+            listCourses = ["Theory of Automata", "Machine Learning", "Management Information Systen"];
+            for (i = 0; i < programs.length; i++) {
+                id = 'collapse-' + i;
+                newDiv = '<div class="panel panel-primary"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#' + id + '">' + programs[i];
+                newDiv += '</a></h4></div><div id="' + id + '" class="panel-collapse collapse' + collapseClass + '"><div class="panel-body"><table class="table table-bordered"><tr>';
+                newDiv += '<td style="width: 100px; text-align: center">Semester</td><td style="position: relative">Courses<div class="btn-group" style="margin-left: 5px; position: absolute; top: 0; right: 0"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">';
+                newDiv += '<span class="glyphicon glyphicon-plus"></span></button><ul id="filterby-dropdown" class="dropdown-menu dropdown-menu-right" role="menu">';
+                for (j = 0; j < listAddCourses.length; j++)
+                    newDiv += '<li><a href="#">' + listAddCourses[j] + '</a></li>';
+                newDiv += '</ul</div</td></tr><tr class="disp-courses"><td rowspan="3"><p>' + (i + 1);
+                newDiv += '</p></td><td>' + listCourses[0] + '</td></tr>';
+                for (j = 1; j < listCourses.length; j++)
+                    newDiv += '<tr><td>'+listCourses[j]+'</td></tr>';
+                newDiv += '<tr><td colspan="2"><button type="button" class="btn btn-primary" data-toggle="button">Add Semester</button></td></tr></table></div></div</div>';
+                $('#accordion').append(newDiv);
+                collapseClass = '';
+            }
+        }
+        function addSemester() {
+        }
+    </script>
+}

@@ -1,0 +1,131 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Welcome to Time Table Class Scheduling System</title>
+    <script src="~/Scripts/jquery-1.8.2.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+    <script src="~/Content/Datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/Content/JQuery.tipsy/javascripts/jquery.tipsy.js"></script>
+    <script src="~/Content/Bootstrap/js/bootstrap.js"></script>
+    <link href="~/Content/JQuery.tipsy/stylesheets/tipsy.css" rel="stylesheet" />
+    <link href="~/Content/Datepicker/css/datepicker.css" rel="stylesheet" />
+    <link href="~/Content/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/MainStyleSheet.css" rel="stylesheet" />
+</head>
+<body>
+    @RenderPage("../Shared/_Header.cshtml")
+    <div class="panel panel-primary" style="margin: 20px; width: 1000px">
+        <div class="panel-heading">About This Site</div>
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    <img src="../Content/Images/icon_timetable.png" alt="Overview">
+                </td>
+                <td style="padding-left: 10px">An automated solution developed specially for institutes, facilitating: Admin to view and organize all the classes, Teachers to view and edit their schedule and Students to view their time table.<br />
+                    The objective of this system is to provide an automated solution to the complex problem of scheduling time table and facilitate the dynamic changes which occur due to class cancellation, make-ups or advance lectures.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="../Content/Images/icon_admin.png" alt="Admin's Perspective">
+                </td>
+                <td>Supreme user of the system and having command over most of the functions. Admin can control, manage, devise, change and block the system state. Main functions are listed below:<br />
+                    •	Initiation of the system<br />
+                    •	Add, delete, and update course information<br />
+                    •	Add, delete, and update teacher information<br />
+                    •	Devise an initial time table<br />
+                    •	Change time table<br />
+                    •	Setup priorities<br />
+                    •	View time table<br />
+                    •	Manage the electronic mail/text system
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="../Content/Images/icon_teacher.png" alt="Teacher's Perspective">
+                </td>
+                <td>Uses the system to view and manage a schedule according to his/her own needs and time availability. Permissions are limited, and in most cases only a request can be put forward to Program Coordinator. Main functions are listed below:<br />
+                    •	View own semester time table<br />
+                    •	View time table of any class<br />
+                    •	Schedule a class (Request Forwarding)<br />
+                    •	Schedule a make-up or advance class (Request Forwarding)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="../Content/Images/icon_teacher.png" alt="Student's Perspective">
+                </td>
+                <td>TTCSS focuses on providing students with a dynamic system account that keep them up to date about their day to day schedule. Main functions are listed below:<br />
+                    •	View own time table<br />
+                    •	View a particular class’ time table<br />
+                    •	Subscribe/Unsubscribe to electronic mail/text system
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="panel panel-primary" style="width: 1000px; margin: 20px">
+        <div class="panel-heading">
+            Report About Variation of Extra Lectures Taken
+        </div>
+        <div class="panel-body" style="text-align: center">
+            <img src="../Content/Images/report_1.png" class="report-images" />
+        </div>
+    </div>
+    <div class="panel panel-primary" style="width: 1000px; margin: 20px">
+        <div class="panel-heading">
+            Report About Variation of Lectures Missed By A Teacher
+        </div>
+        <div class="panel-body" style="text-align: center">
+            <img src="../Content/Images/report_2.png" class="report-images" />
+        </div>
+    </div>
+    <div class="panel panel-primary" style="width: 1000px; margin: 20px">
+        <div class="panel-heading">
+            Report About Usage of Rooms
+        </div>
+        <div class="panel-body" style="text-align: center">
+            <img src="../Content/Images/report_3.png" class="report-images" />
+        </div>
+    </div>
+    <div style="position: absolute; margin-top: 120px; margin-left: 1030px; top: 0; left: 0" class="fb-like-box" data-href="https://www.facebook.com/attcs.pucit" data-height="700" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="true" data-show-border="true"></div>
+    <div style="position: absolute; margin-top: 830px; margin-left: 1030px; top: 0; left: 0; padding: 5px; font-variant: small-caps; width: 300px" class="well">
+        <table class="table-bordered" style="padding: 5px; width: 100%">
+            <tr>
+                <td colspan="2"><b>Site Created By:</b></td>
+            </tr>
+            <tr>
+                <td>Ammarah Ijaz</td>
+                <td>BSEF10M005</td>
+            </tr>
+            <tr>
+                <td>Muhammad Rehan</td>
+                <td>BSEF10M006</td>
+            </tr>
+            <tr>
+                <td>Muhammad Anas Khan Sherwani</td>
+                <td>BSEF10M013</td>
+            </tr>
+            <tr>
+                <td>Sundus Saif</td>
+                <td>BSEF10M054</td>
+            </tr>
+        </table>
+    </div>
+    <div style="position: absolute; height: 110px; margin-top: 950px; margin-left: 1030px; top: 0; left: 0" id="fb-root"></div>
+</body>
+<script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+</html>

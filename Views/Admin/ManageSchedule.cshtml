@@ -1,0 +1,132 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@RenderPage("~/Views/Admin/_MainBar.cshtml")
+@RenderPage("~/Views/Admin/_ManageSideBar.cshtml")
+<div class="manage-records" style="padding-top: 10px">
+    <div class="panel panel-primary" style="margin-top: 20px">
+        <div class="panel-heading" style="position: relative">
+            Fall
+    <input id="checkbox-spring" type="radio" name="fall" value="Spring" style="margin-left: 10px" checked="checked" />
+            Spring
+    <input id="checkbox-autumn" type="radio" name="fall" value="Autumn" style="margin-left: 10px" />
+            Autumn
+    <div class="btn-group" style="margin-left: 5px; margin-right: 5px">
+        <button id="degree-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width: 150px">
+            BS (SE)<span class="caret" style="margin-left: 5px"></span>
+        </button>
+        <ul id="degree-dropdown" class="dropdown-menu" role="menu">
+            <li><a id="degree-1" href="#" onclick="return changeDegree(this.id)">BS (CS)</a></li>
+            <li><a id="degree-2" href="#" onclick="return changeDegree(this.id)">BS (IT)</a></li>
+            <li><a id="degree-3" href="#" onclick="return changeDegree(this.id)">BS (SE)</a></li>
+        </ul>
+    </div>
+            Section
+    <input id="section-morning" type="radio" name="section" value="Morning" style="margin-left: 10px" checked="checked" />
+            Morning
+    <input id="section-afternoon" type="radio" name="section" value="Afternoon" style="margin-left: 10px" />
+            Afternoon
+    <button type="button" class="btn btn-lg btn-default" style="position: absolute; margin-top: 5px; margin-right: 5px; top: 0; right: 0">Generate Time Table</button>
+        </div>
+        <table id="table-records" class="table table-bordered" style="text-align: center">
+            <tr style="font-weight: bold; color: black">
+                <td>Semester</td>
+                <td>Courses</td>
+                <td>Teacher</td>
+                <td style="width:200px">Priority</td>
+            </tr>
+        </table>
+    </div>
+</div>
+@section Script{
+    <script>
+        function changeInstitute(id) {
+            val = id.substring(id.indexOf('-') + 1);
+            text = $('#' + id).text();
+            changeFilter('filterby-0');
+            $('#instituteby-button').text('');
+            $('#instituteby-button').prepend(text + '<span class="caret" style="margin-left: 5px"></span>');
+            return false;
+        }
+        function changeFilter(id) {
+            val = id.substring(id.indexOf('-') + 1);
+            text = $('#' + id).text();
+            $('#searchby-button').removeAttr('disabled');
+            $('#searchby-input').removeAttr('disabled');
+            $('#searchby-go').removeAttr('disabled');
+            $('#filterby-button').text('');
+            if (val == '0') {
+                text = 'Select Filter';
+                $('#searchby-button').text('');
+                $('#searchby-button').prepend('Search By<span class="caret" style="margin-left: 5px"></span>');
+                $('#searchby-button').attr('disabled', 'disabled');
+                $('#searchby-input').attr('disabled', 'disabled');
+                $('#searchby-go').attr('disabled', 'disabled');
+            }
+            else if (val == '1') {
+                $('#searchby-list').text('');
+                sid = 1;
+                sname = 'Name';
+                list = '<li><a id="searchby-' + sid + '" href="#" onclick="return changeSearchBy(this.id)">' + sname + '</a></li>';
+                $('#searchby-list').append(list);
+            }
+            else if (val == '2') {
+                $('#searchby-list').text('');
+                sid = 1;
+                sname = 'Name';
+                list = '<li><a id="searchby-' + sid + '" href="#" onclick="return changeSearchBy(this.id)">' + sname + '</a></li>';
+                $('#searchby-list').append(list);
+            }
+            else if (val == '3') {
+                $('#searchby-list').text('');
+                sid = 1;
+                sname = 'Name';
+                list = '<li><a id="searchby-' + sid + '" href="#" onclick="return changeSearchBy(this.id)">' + sname + '</a></li>';
+                $('#searchby-list').append(list);
+            }
+            $('#filterby-button').prepend(text + '<span class="caret" style="margin-left: 5px"></span>');
+            return false;
+        }
+        function changeSearchBy(id) {
+            val = id.substring(id.indexOf('-') + 1);
+            $('#searchby-button').text('');
+            //            $('#searchby-button').prepend('Search By<span class="caret" style="margin-left: 5px"></span>');
+            $('#searchby-button').prepend($('#' + id).text() + '<span class="caret" style="margin-left: 5px"></span>');
+            return false;
+        }
+        function addNewRecord() {
+        }
+        function cancelNewRecord() {
+            $('#table-records tr').eq(1).remove();
+        }
+        $("#mainbar-manage").attr('class', 'active');
+        $("#sidebar-students").attr('class', 'active');
+        newRow = '<tr><td>';
+        newColumn = '</td><td>';
+        endRow = '</td></tr>';
+        semester = ["1", "3", "5", "7"];
+        courses = [["PF", "OOP", "DSA", "DLD"],
+            ["PF", "OOP", "DSA", "DLD"],
+            ["PF", "OOP", "DSA", "DLD"],
+            ["PF", "OOP", "DSA", "DLD"]];
+        studentEmail = ["0333-1111111", "0333-1111111", "0333-1111111", "0333-1111111"];
+        for (i = 0; i < semester.length; i++) {
+            teachers = [["Muhammad Idrees", "Fareed Baig"],
+                ["Muhammad Idrees", "Fareed Baig"],
+                ["Muhammad Idrees", "Fareed Baig"],
+                ["Muhammad Idrees", "Fareed Baig"]];
+            tablerow = '<tr><td rowspan="' + courses[i].length + '">' + semester[i] + '</td>';
+            for (j = 0; j < courses.length; j++) {
+                tablerow += '<td>' + courses[0][j] + newColumn;
+                tablerow += '<div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width: auto">';
+                tablerow += 'Select Teacher<span class="caret" style="margin-left: 5px"></span></button><ul id="degree-dropdown" class="dropdown-menu" role="menu">'
+                for (k = 0; k < teachers[j].length; k++) {
+                    tablerow += '<li><a href="#" >' + teachers[j][k] + '</a></li>';
+                }
+                tablerow += '</ul></div></td><td><input type="number" min="1" class="form-control" placeholder="Priority"/></td></tr>';
+                $('#table-records tbody > tr:last').after(tablerow);
+                tablerow = '<tr>';
+            }
+        }
+    </script>
+}

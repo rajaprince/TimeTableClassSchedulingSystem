@@ -1,0 +1,204 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Welcome to Time Table Class Scheduling System</title>
+    <script src="~/Scripts/jquery-1.8.2.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+    <script src="~/Content/Datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/Content/JQuery.tipsy/javascripts/jquery.tipsy.js"></script>
+    <script src="~/Content/Bootstrap/js/bootstrap.js"></script>
+    <link href="~/Content/JQuery.tipsy/stylesheets/tipsy.css" rel="stylesheet" />
+    <link href="~/Content/Datepicker/css/datepicker.css" rel="stylesheet" />
+    <link href="~/Content/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/MainStyleSheet.css" rel="stylesheet" />
+</head>
+<body>
+    @RenderPage("../Shared/_Header.cshtml")
+    <div class="login-box">
+        <form id="login-form" name="login-form" method="post" onsubmit="return login()">
+            <table>
+                <tr>
+                    <td style="padding: 10px; width: 80px">Username:</td>
+                    <td style="padding: 10px" id="login-user">
+                        <input type="text" id="user" name="username" class="form-control" style="width: 260px" placeholder="Username" /></td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px">Password:</td>
+                    <td style="padding: 10px" id="login-pass">
+                        <input type="password" id="pass" name="password" class="form-control" style="width: 260px" placeholder="Password" /></td>
+                </tr>
+                <tr id="login-error" style="display: none; color: red">
+                    <td></td>
+                    <td style="padding-left: 10px">
+                        <div id="error-msg" style="display: none"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="padding: 10px">
+                        <input type="submit" id="login-button" class="btn btn-success" value="Login" style="width: 125px" />
+                        <input type="button" id="login-forgot" class="btn btn-danger" value="Forgot Password?" style="width: 125px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="padding: 10px">
+                        <a href="/Home/Signup">Dont have an Account?</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="bs-example" style="margin-top: 10px; margin-left: 400px">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="item active">
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="../Content/Images/icon_timetable.png" alt="Overview">
+                            </td>
+                            <td style="padding-left: 10px">An automated solution developed specially for institutes, facilitating: Admin to view and organize all the classes, Teachers to view and edit their schedule and Students to view their time table.<br />
+                                The objective of this system is to provide an automated solution to the complex problem of scheduling time table and facilitate the dynamic changes which occur due to class cancellation, make-ups or advance lectures.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="item">
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="../Content/Images/icon_admin.png" alt="Admin's Perspective">
+                            </td>
+                            <td>Supreme user of the system and having command over most of the functions. Admin can control, manage, devise, change and block the system state. Main functions are listed below:<br />
+                                •	Initiation of the system<br />
+                                •	Add, delete, and update course information<br />
+                                •	Add, delete, and update teacher information<br />
+                                •	Devise an initial time table<br />
+                                •	Change time table<br />
+                                •	Setup priorities<br />
+                                •	View time table<br />
+                                •	Manage the electronic mail/text system
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="item">
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="../Content/Images/icon_teacher.png" alt="Teacher's Perspective">
+                            </td>
+                            <td>Uses the system to view and manage a schedule according to his/her own needs and time availability. Permissions are limited, and in most cases only a request can be put forward to Program Coordinator. Main functions are listed below:<br />
+                                •	View own semester time table<br />
+                                •	View time table of any class<br />
+                                •	Schedule a class (Request Forwarding)<br />
+                                •	Schedule a make-up or advance class (Request Forwarding)
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="item">
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="../Content/Images/icon_teacher.png" alt="Student's Perspective">
+                            </td>
+                            <td>TTCSS focuses on providing students with a dynamic system account that keep them up to date about their day to day schedule. Main functions are listed below:<br />
+                                •	View own time table<br />
+                                •	View a particular class’ time table<br />
+                                •	Subscribe/Unsubscribe to electronic mail/text system
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+    <!-- /example -->
+</body>
+<script>
+    $('.carousel').carousel();
+    function login() {
+        var user = $('#user').val().trim();
+        var pass = $('#pass').val().trim();
+        if (user.length == 0) {
+            $("#login-user").attr('class', 'form-group has-warning');
+            $('#error-msg').text('Please Enter Username');
+            $('#login-error').show();
+            $('#error-msg').slideDown(500);
+            return false;
+        }
+        else if (pass.length == 0) {
+            $("#login-user").removeAttr('class');
+            $("#login-pass").attr('class', 'form-group has-warning');
+            $('#error-msg').text('Please Enter Password');
+            $('#login-error').show();
+            $('#error-msg').slideDown(500);
+            return false;
+        }
+        $('#error-msg').hide();
+        $('#login-error').hide();
+        $("#login-user").removeAttr('class');
+        $("#login-pass").removeAttr('class');
+        $.ajax({
+            type: 'POST', url: '/home/verifylogin?user=' + user + '&pass=' + pass,
+            success: function (response) {
+                if (response == '1') {
+                    $(location).attr('href', '/admin/index');
+                    $("#login-user").attr('class', 'form-group has-success');
+                    $("#login-pass").attr('class', 'form-group has-success');
+                    $('#error-msg').text('Login Successful');
+                    $('#error-msg').slideDown(500);
+                    $('#login-error').show();
+                }
+                else if (response == '2') {
+                    $(location).attr('href', '/teacher/index');
+                    $("#login-user").attr('class', 'form-group has-success');
+                    $("#login-pass").attr('class', 'form-group has-success');
+                    $('#error-msg').text('Login Successful');
+                    $('#error-msg').slideDown(500);
+                    $('#login-error').show();
+                }
+                else if (response == '3') {
+                    $(location).attr('href', '/student/index');
+                    $("#login-user").attr('class', 'form-group has-success');
+                    $("#login-pass").attr('class', 'form-group has-success');
+                    $('#error-msg').text('Login Successful');
+                    $('#error-msg').slideDown(500);
+                    $('#login-error').show();
+                }
+                else {
+                    $("#login-user").attr('class', 'form-group has-error');
+                    $("#login-pass").attr('class', 'form-group has-error');
+                    $('#error-msg').text('Invalid Username or Password');
+                    $('#error-msg').slideDown(500);
+                    $('#login-error').show();
+                }
+            },
+            error: function () {
+                alert('Error Occurred: Contact Administrator');
+            }
+        });
+        return false;
+    }
+</script>
+</html>

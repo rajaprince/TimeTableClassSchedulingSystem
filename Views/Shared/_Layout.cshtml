@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/jquery-1.8.2.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+    <script src="~/Content/Datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/Content/JQuery.tipsy/javascripts/jquery.tipsy.js"></script>
+    <script src="~/Content/Bootstrap/js/bootstrap.js"></script>
+    <link href="~/Content/JQuery.tipsy/stylesheets/tipsy.css" rel="stylesheet" />
+    <link href="~/Content/Datepicker/css/datepicker.css" rel="stylesheet" />
+    <link href="~/Content/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/MainStyleSheet.css" rel="stylesheet" />
+
+    @RenderSection("Style", false)
+</head>
+<body>
+    @RenderPage("_Header.cshtml")
+    @RenderBody()
+</body>
+@RenderSection("Script", false)
+@RenderPage("_SharedScript.cshtml")
+</html>

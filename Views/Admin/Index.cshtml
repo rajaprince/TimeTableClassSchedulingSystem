@@ -1,0 +1,224 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@RenderPage("~/Views/Admin/_MainBar.cshtml")
+<div class="display-records">
+    <div class="panel panel-primary" style="margin-top: 20px">
+        <div class="panel-heading">
+            <table>
+                <thead>
+                    <tr>
+                        <td style="width: 300px">Time Table For
+                        <div class="btn-group" style="margin-left: 5px">
+                            <button id="instituteby-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width: 150px">
+                                PUCIT (Old Campus)<span class="caret" style="margin-left: 5px"></span>
+                            </button>
+                            <ul id="instituteby-dropdown" class="dropdown-menu" role="menu">
+                                <li><a id="instituteby-1" href="#" onclick="return changeInstitute(this.id)">PUCIT (Old Campus)</a></li>
+                                <li><a id="instituteby-2" href="#" onclick="return changeInstitute(this.id)">PUCIT (New Campus)</a></li>
+                                <li class="divider"></li>
+                                <li><a id="instituteby-0" href="#" onclick="return changeInstitute(this.id)">All Institutes</a></li>
+                            </ul>
+                        </div>
+                        </td>
+                        <td style="width: 60px; text-align: right">Filter By:
+                        </td>
+                        <td>
+                            <div class="btn-group" style="margin-left: 5px">
+                                <button id="filterby-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    Select Filter<span class="caret" style="margin-left: 5px"></span>
+                                </button>
+                                <ul id="filterby-dropdown" class="dropdown-menu" role="menu">
+                                    <li><a id="filterby-1" href="#" onclick="return changeFilter(this.id)">Course</a></li>
+                                    <li><a id="filterby-2" href="#" onclick="return changeFilter(this.id)">Program</a></li>
+                                    <li><a id="filterby-3" href="#" onclick="return changeFilter(this.id)">Teacher</a></li>
+                                    <li class="divider"></li>
+                                    <li><a id="filterby-0" href="#" onclick="return changeFilter(this.id)">All Courses</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <button id="searchby-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" disabled="disabled">Search By<span class="caret" style="margin-left: 5px"></span></button>
+                                        <ul id="searchby-list" class="dropdown-menu">
+                                        </ul>
+                                    </div>
+                                    <input id="searchby-input" type="text" class="form-control" style="width: 350px" disabled="disabled" placeholder="Filter Keywords" />
+                                    <span class="input-group-btn">
+                                        <button id="searchby-go" class="btn btn-default" type="button" disabled="disabled">Go!</button>
+                                    </span>
+                                </div>
+                                <!-- /input-group -->
+                            </div>
+                            <!-- /.col-lg-6 -->
+
+                        </td>
+                        <td style="width: 200px">
+                            <input type="text" class="form-control" value="02/11/14" data-date-format="mm/dd/yy" id="dp2">
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <table id="table-records" class="table table-bordered" style="text-align: center">
+            <thead>
+                <tr>
+                    <td>Room Name</td>
+                    <td>08:15 - 09:40</td>
+                    <td>09:45 - 09:40</td>
+                    <td>11:30 - 01:00</td>
+                    <td>01:00 - 02:30</td>
+                    <td>02:30 - 04:00</td>
+                    <td>04:00 - 5:30</td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Style{
+    <style>
+        #table-records thead td {
+            width: 300px;
+            height: auto;
+            font-weight: bold;
+            color: black;
+            border-left-width: medium;
+            border-right-width: medium;
+            border-bottom-width: medium;
+            border-bottom-style: solid;
+            border-color: aqua;
+        }
+
+        #table-records td {
+            border-width: medium;
+            text-align: center;
+            vertical-align: middle;
+            font-weight: normal;
+        }
+
+        #table-records tbody td:hover {
+            background-color: aqua;
+        }
+
+        .edit-button {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            display: none;
+        }
+    </style>
+}
+@section Script{
+    <script>
+        $("#mainbar-home").attr('class', 'active');
+        $('#dp2').datepicker();
+        loadRecords();
+        function editOptionSelected(id) {
+            val = id.substring(id.indexOf('-', id.indexOf('-') + 1) + 1);
+            text = $('#' + id).text();
+            alert(text + '!!!' + val);
+            return false;
+        }
+        function changeInstitute(id) {
+            val = id.substring(id.indexOf('-') + 1);
+            text = $('#' + id).text();
+            alert(text);
+            changeFilter('filterby-0');
+            $('#instituteby-button').text('');
+            $('#instituteby-button').prepend(text + '<span class="caret" style="margin-left: 5px"></span>');
+            return false;
+        }
+        function changeFilter(id) {
+            val = id.substring(id.indexOf('-') + 1);
+            text = $('#' + id).text();
+            $('#searchby-button').removeAttr('disabled');
+            $('#searchby-input').removeAttr('disabled');
+            $('#searchby-go').removeAttr('disabled');
+            $('#filterby-button').text('');
+            if (val == '0') {
+                text = 'Select Filter';
+                $('#searchby-button').text('');
+                $('#searchby-button').prepend('Search By<span class="caret" style="margin-left: 5px"></span>');
+                $('#searchby-button').attr('disabled', 'disabled');
+                $('#searchby-input').attr('disabled', 'disabled');
+                $('#searchby-go').attr('disabled', 'disabled');
+            }
+            else if (val == '1') {
+                $('#searchby-list').text('');
+                sid = 1;
+                sname = 'Name';
+                list = '<li><a id="searchby-' + sid + '" href="#" onclick="return changeSearchBy(this.id)">' + sname + '</a></li>';
+                $('#searchby-list').append(list);
+            }
+            else if (val == '2') {
+                $('#searchby-list').text('');
+                sid = 1;
+                sname = 'Name';
+                list = '<li><a id="searchby-' + sid + '" href="#" onclick="return changeSearchBy(this.id)">' + sname + '</a></li>';
+                $('#searchby-list').append(list);
+            }
+            else if (val == '3') {
+                $('#searchby-list').text('');
+                sid = 1;
+                sname = 'Name';
+                list = '<li><a id="searchby-' + sid + '" href="#" onclick="return changeSearchBy(this.id)">' + sname + '</a></li>';
+                $('#searchby-list').append(list);
+            }
+            $('#filterby-button').append(text + '<span class="caret" style="margin-left: 5px"></span>');
+            return false;
+        }
+        function changeSearchBy(id) {
+            val = id.substring(id.indexOf('-') + 1);
+            $('#searchby-button').text('');
+            $('#searchby-button').prepend($('#' + id).text() + '<span class="caret" style="margin-left: 5px"></span>');
+            return false;
+        }
+        function mouseIn(id) {
+            $('#' + id + ' div:first').show();
+        }
+        function mouseOut(id) {
+            $('#' + id + ' div:first').hide();
+        }
+        function loadRecords() {
+            var rooms = ["Room 1", "Room 2"];
+            var lectures = ["08:15 - 09:40", "09:45 - 09:40", "08:15 - 09:40", "09:45 - 09:40", "08:15 - 09:40", "09:45 - 09:40"];
+            for (i = 0; i < rooms.length; i++) {
+                var classes = [["BS (SE) F12 Morning", "BS (SE) F10 Morning", "", "BS (CS) F11 Afternoon", "BS (IT) F12 Afternoon", "BS (CS) F10 Afternoon"],
+                    ["BS (IT) F11 Morning", "", "BS (CS) F11 Morning", "BS (IT) F13 Afternoon", "BS (IT) F11 Afternoon", "BS (SE) F10 Afternoon"]];
+                var courses = [["Object Oriented Programming", "Management Information System", "", "Database Systems", "Digital Logic Design", "Enterprise Application Development"],
+                    ["Analysis of Algorithms", "", "Internet Programming", "Programming Fundamentals", "Object Oriented Analysis and Design", "Machine Learning"]];
+                var teachers = [["Muhammad Farooq", "Sadeeqa Khan", "", "Asim Rasul", "Asif Sohail", "Shuja-ur-Rehman Baig"],
+                    ["Tahir Ejaz", "", "Hassan Khan", "Ahmad Ghazali", "Amina Mustansir", "Kamran Malik"]];
+                newrow = '<tr><td>' + rooms[i] + '</td>';
+                for (j = 0; j < lectures.length; j++) {
+                    id = 'tr' + i + '-td' + j;
+                    newrow += '<td id="' + id + '" onmouseover="mouseIn(this.id)" onmouseout="mouseOut(this.id)" style="position: relative">';
+                    if (courses[i][j].length > 0)
+                        options = ["Shift Temporarily", "Shift Permanently", "", "Cancel Temporarily", "Cancel Permanently"];
+                    else
+                        options = ["Add Makeup Lecture", "Add Permanent Lecture"];
+                    newrow += '<div class="btn-group edit-button"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-pencil"></span></button>';
+                    newrow += '<ul class="dropdown-menu" role="menu" style="width: auto; text-align: left">';
+                    for (k = 0; k < options.length; k++) {
+                        listid = id + '-' + k;
+                        if (options[k].length == 0)
+                            newrow += '<li class="divider"></li>';
+                        else
+                            newrow += '<li><a id="' + listid + '" href="#" data-toggle="popover" data-placement="left" title="" data-content="Pop-over?" role="button" data-original-title="A Title">' + options[k] + '</a></li>';
+                    }
+                    newrow += '</ul></div>';
+                    if (courses[i][j].length > 0)
+                        newrow += '<p><b>' + classes[i][j] + '</b><br />' + courses[i][j] + '<br /><i>' + teachers[i][j] + '</i></p></td>';
+                    else
+                        newrow += '<p><b>Free Slot</p></td>';
+                }
+                newrow += '</tr>';
+                $("#table-records tr:last").after(newrow);
+            }
+        }
+    </script>
+}

@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@RenderPage("~/Views/Admin/_MainBar.cshtml")
+<div class="display-records">
+    <div class="panel panel-primary">
+        <div class="panel-heading edit-bar">
+            <h3 class="panel-title">Personal Information</h3>
+            <div class="btn-group edit-icon">
+                <button id="editpersonal-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <ul id="editpersonal-dropdown" class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li><a id="editpersonal-1" href="#" onclick="return enableEdit(this.id)">Edit Information</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="editpersonal" class="panel-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Full Name</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" name="fullname" placeholder="Full Name" readonly="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Mobile Number</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="mobilenumber" placeholder="Mobile Number" readonly="true">
+                    </div>
+                    <label class="col-sm-2 control-label">Email Address</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="emailaddress" placeholder="Email Address" readonly="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Postal Address</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" name="fullname" placeholder="Postal Address" readonly="true">
+                    </div>
+                </div>
+                <div id="editpersonal-buttons" class="form-group" style="display:none">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button id="editpersonal-save" type="submit" class="btn btn-primary" onclick="saveEdit(this.id)">Save Changes</button>
+                        <button id="editpersonal-cancel" type="button" class="btn btn-default" onclick="cancelEdit(this.id)">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Style{
+    <style>
+    </style>
+}
+@section Script{
+    <script>
+        $("#mainbar-profile").attr('class', 'active');
+        function enableEdit(id) {
+            divid = id.substring(0, id.indexOf('-'));
+            $('#' + divid + '-buttons').slideDown();
+            $('#' + divid + ' input').removeAttr('readonly');
+            return false;
+        }
+        function saveEdit(id) {
+            divid = id.substring(0, id.indexOf('-'));
+            $('#' + divid + '-buttons').slideUp();
+            $('#' + divid + ' input').attr('readonly', 'true');
+        }
+        function cancelEdit(id) {
+            divid = id.substring(0, id.indexOf('-'));
+            $('#' + divid + '-buttons').slideUp();
+            $('#' + divid + ' input').attr('readonly', 'true');
+        }
+    </script>
+}

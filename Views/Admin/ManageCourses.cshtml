@@ -1,0 +1,190 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@RenderPage("~/Views/Admin/_MainBar.cshtml")
+@RenderPage("~/Views/Admin/_ManageSideBar.cshtml")
+<div class="manage-records">
+    <div class="panel panel-primary" style="margin-top: 20px">
+        <div class="panel-heading">
+            <table>
+                <tr>
+                    <td style="width: 300px">Enrolled Courses in
+                        <div class="btn-group" style="margin-left: 5px">
+                            <button id="instituteby-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width: 150px">
+                                PUCIT (Old Campus)<span class="caret" style="margin-left: 5px"></span>
+                            </button>
+                            <ul id="instituteby-dropdown" class="dropdown-menu" role="menu">
+                                <li><a id="instituteby-1" href="#" onclick="return changeInstitute(this.id)">PUCIT (Old Campus)</a></li>
+                                <li><a id="instituteby-2" href="#" onclick="return changeInstitute(this.id)">PUCIT (New Campus)</a></li>
+                                <li class="divider"></li>
+                                <li><a id="instituteby-0" href="#" onclick="return changeInstitute(this.id)">All Institutes</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td style="width: 60px; text-align: right">Filter By:
+                    </td>
+                    <td>
+                        <div class="btn-group" style="margin-left: 5px">
+                            <button id="filterby-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                Select Filter<span class="caret" style="margin-left: 5px"></span>
+                            </button>
+                            <ul id="filterby-dropdown" class="dropdown-menu" role="menu">
+                                <li><a id="filterby-1" href="#" onclick="return changeFilter(this.id)">Program</a></li>
+                                <li><a id="filterby-2" href="#" onclick="return changeFilter(this.id)">Room</a></li>
+                                <li><a id="filterby-3" href="#" onclick="return changeFilter(this.id)">Teacher</a></li>
+                                <li class="divider"></li>
+                                <li><a id="filterby-0" href="#" onclick="return changeFilter(this.id)">All Courses</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button id="searchby-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" disabled="disabled">Search By<span class="caret" style="margin-left: 5px"></span></button>
+                                    <ul id="searchby-list" class="dropdown-menu">
+                                    </ul>
+                                </div>
+                                <input id="searchby-input" type="text" class="form-control" style="width: auto" disabled="disabled" placeholder="Filter Keywords" />
+                                <span class="input-group-btn">
+                                    <button id="searchby-go" class="btn btn-default" type="button" disabled="disabled">Go!</button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-6 -->
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table id="table-records" class="table" style="text-align: center">
+            <tr style="font-weight: bold; color: black">
+                <td>#</td>
+                <td>Course Code</td>
+                <td>Course Name</td>
+                <td>Credit Hours</td>
+                <td>
+                    <!-- Button trigger modal -->
+                    <button class="btn btn-primary" style="width: 100px" data-toggle="modal" data-target="#myModal">
+                        Add New
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">Add New Course</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label for="form-code" class="col-sm-3 control-label">Course Code</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="form-code" placeholder="Course Code">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="form-name" class="col-sm-3 control-label">Course Name</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="form-name" placeholder="Course Name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="form-address" class="col-sm-3 control-label">Credit Hours</label>
+                                            <div class="col-sm-8">
+                                                <input type="number" min="1" class="form-control" id="form-hours" placeholder="Credit Hours"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" onclick="addNewRecord()">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+@section Script{
+    <script>
+        function changeInstitute(id) {
+            val = id.substring(id.indexOf('-') + 1);
+            text = $('#' + id).text();
+            changeFilter('filterby-0');
+            $('#instituteby-button').text('');
+            $('#instituteby-button').prepend(text + '<span class="caret" style="margin-left: 5px"></span>');
+            return false;
+        }
+        function changeFilter(id) {
+            val = id.substring(id.indexOf('-') + 1);
+            text = $('#' + id).text();
+            $('#searchby-button').removeAttr('disabled');
+            $('#searchby-input').removeAttr('disabled');
+            $('#searchby-go').removeAttr('disabled');
+            $('#filterby-button').text('');
+            if (val == '0') {
+                text = 'Select Filter';
+                $('#searchby-button').text('');
+                $('#searchby-button').prepend('Search By<span class="caret" style="margin-left: 5px"></span>');
+                $('#searchby-button').attr('disabled', 'disabled');
+                $('#searchby-input').attr('disabled', 'disabled');
+                $('#searchby-go').attr('disabled', 'disabled');
+            }
+            else if (val == '1') {
+                $('#searchby-list').text('');
+                sid = 1;
+                sname = 'Name';
+                list = '<li><a id="searchby-' + sid + '" href="#" onclick="return changeSearchBy(this.id)">' + sname + '</a></li>';
+                $('#searchby-list').append(list);
+            }
+            else if (val == '2') {
+                $('#searchby-list').text('');
+                sid = 1;
+                sname = 'Name';
+                list = '<li><a id="searchby-' + sid + '" href="#" onclick="return changeSearchBy(this.id)">' + sname + '</a></li>';
+                $('#searchby-list').append(list);
+            }
+            else if (val == '3') {
+                $('#searchby-list').text('');
+                sid = 1;
+                sname = 'Name';
+                list = '<li><a id="searchby-' + sid + '" href="#" onclick="return changeSearchBy(this.id)">' + sname + '</a></li>';
+                $('#searchby-list').append(list);
+            }
+            $('#filterby-button').prepend(text + '<span class="caret" style="margin-left: 5px"></span>');
+            return false;
+        }
+        function changeSearchBy(id) {
+            val = id.substring(id.indexOf('-') + 1);
+            $('#searchby-button').text('');
+            //            $('#searchby-button').prepend('Search By<span class="caret" style="margin-left: 5px"></span>');
+            $('#searchby-button').prepend($('#' + id).text() + '<span class="caret" style="margin-left: 5px"></span>');
+            return false;
+        }
+        function addNewRecord() {
+        }
+        function cancelNewRecord() {
+            $('#table-records tr').eq(1).remove();
+        }
+        $("#mainbar-manage").attr('class', 'active');
+        $("#sidebar-courses").attr('class', 'active');
+        newRow = '<tr><td>';
+        newColumn = '</td><td>';
+        endRow = '</td><td><input type="button" id="del-1" class="btn btn-info" value="Delete" style="width: 100px" /></td></tr>';
+        tablerow = newRow + "1" + newColumn + "P-1"
+            + newColumn + "PF" + newColumn + "3" + endRow
+        $('#table-records tr:last').after(tablerow);
+        tablerow = newRow + "2" + newColumn + "P-2"
+            + newColumn + "OOP" + newColumn + "3" + endRow
+        $('#table-records tr:last').after(tablerow);
+        tablerow = newRow + "3" + newColumn + "P-3"
+            + newColumn + "DSA" + newColumn + "3" + endRow
+        $('#table-records tr:last').after(tablerow);
+    </script>
+}
